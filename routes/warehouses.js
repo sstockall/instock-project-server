@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const fs = require('fs');
-const warehoueseFile = fs.readFileSync('./data/warehouses.json') 
+const warehouseFile = fs.readFileSync('./data/warehouses.json') 
 
 router.route('/')
     .get((_req, res) => {
-        const warehoueses = JSON.parse(warehoueseFile);
-        res.json(warehoueses)
+        const warehouses = JSON.parse(warehouseFile);
+        res.json(warehouses)
     })
 
 module.exports = router;
