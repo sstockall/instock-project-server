@@ -7,7 +7,7 @@ const cors = require('cors');
 app.use(express.json());
 app.use(cors());
 
-//Routes
+// Routes
 const warehousesRoute = require('./routes/warehouses');
 app.use('/warehouses', warehousesRoute);
 
