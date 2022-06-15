@@ -4,7 +4,8 @@ const fs = require('fs');
 var uniqid = require('uniqid')
 
 const getWareHouses = () => {
-    const warehouseFile = fs.readFileSync('./data/warehouses.json')
+    const warehousesFile = fs.readFileSync('./data/warehouses.json')
+    const warehouses = JSON.parse(warehousesFile)
     
 }
 
@@ -18,4 +19,14 @@ router.route('/new')
 // input: name, description, category, statys, quantity, warehouseID
 // get warehouseName, assign id
 
-module.exports = router
+const inventoryFile = fs.readFileSync('./data/inventories.json');
+
+// GET LIST OF ALL INVENTORY ITEMS FROM ALL WAREHOUSES
+
+router.route('/')
+    .get((_req, res) => {
+        const inventories = JSON.parse(inventoryFile);
+        res.json(inventories)
+    })
+
+module.exports = router; 
