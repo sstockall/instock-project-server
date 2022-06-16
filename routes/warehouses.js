@@ -7,7 +7,7 @@ const uniqid = require('uniqid')
 // ===== Add new warehouse =====
 router.route('/new')
     .post((req, res) => {
-        
+
         const { name, address, city, country, contactName, position, phone, email } = req.body
         if (!dataIsValid(name, address, city, country, contactName, position, phone, email)) {
             res.status(400).send("Incorrect or missing information sent to server")
@@ -28,7 +28,8 @@ router.route('/new')
             res.status(201).send(newWarehouse)
             const warehouses = JSON.parse(warehouseFile)
             let updatedWarehouses = [...warehouses, newWarehouse]
-            fs.writeFileSync('./data/warehouses.json', JSON.stringify(updatedWarehouses))
+            console.log(newWarehouse)
+            // fs.writeFileSync('./data/warehouses.json', JSON.stringify(updatedWarehouses))
         }
     })
 // ------ validation methods ------
@@ -39,10 +40,22 @@ const inputIsValid = (input) => {
     return true
 }
 const dataIsValid = (name, address, city, country, contactName, position, phone, email) => {
-    if (!inputIsValid(name) || !inputIsValid(address) || !inputIsValid(city) || !inputIsValid(country) || !inputIsValid(contactName) || !inputIsValid(position) || !inputIsValid(phone) || !inputIsValid(email)) {
+    if (!inputIsValid(name) || !inputIsValid(address) || !inputIsValid(city) || !inputIsValid(country) || !inputIsValid(contactName) || !inputIsValid(position) || !inputIsValid(phone) || !emailIsValid(email)) {
         return false
     } else {
         return true
+    }
+}
+
+const emailIsValid = (input) => {
+    var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (input.match(mailformat)) {
+        console.log("Valid email address!")
+        return true;
+    }
+    else {
+        console.log("You have entered an invalid email address!");
+        return false;
     }
 }
 
