@@ -40,7 +40,7 @@ const inputIsValid = (input) => {
     return true
 }
 const dataIsValid = (name, address, city, country, contactName, position, phone, email) => {
-    if (!inputIsValid(name) || !inputIsValid(address) || !inputIsValid(city) || !inputIsValid(country) || !inputIsValid(contactName) || !inputIsValid(position) || !inputIsValid(phone) || !emailIsValid(email)) {
+    if (!inputIsValid(name) || !inputIsValid(address) || !inputIsValid(city) || !inputIsValid(country) || !inputIsValid(contactName) || !inputIsValid(position) || !phoneIsValid(phone) || !emailIsValid(email)) {
         return false
     } else {
         return true
@@ -48,13 +48,25 @@ const dataIsValid = (name, address, city, country, contactName, position, phone,
 }
 
 const emailIsValid = (input) => {
-    var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    let mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if (input.match(mailformat)) {
         console.log("Valid email address!")
         return true;
     }
     else {
         console.log("You have entered an invalid email address!");
+        return false;
+    }
+}
+
+const phoneIsValid = (input) => {
+    let phoneformat = /^\+[0-9]+\s\(\d\d\d\)\s\d\d\d-\d\d\d\d$/i;
+    if(input.match(phoneformat)) {
+        console.log("Valid phone number!")
+        return true;
+    }
+    else {
+        console.log("You have entered an invalid phone number!");
         return false;
     }
 }
