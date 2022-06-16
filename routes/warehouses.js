@@ -7,7 +7,6 @@ const uniqid = require('uniqid')
 // ===== Add new warehouse =====
 router.route('/new')
     .post((req, res) => {
-
         const { name, address, city, country, contactName, position, phone, email } = req.body
         if (!dataIsValid(name, address, city, country, contactName, position, phone, email)) {
             res.status(400).send(errorMessage)
@@ -79,11 +78,29 @@ const phoneIsValid = (input) => {
     }
 }
 
-// ===== Get list of all warehouses items =====
+// ===== Get list of all warehouses items ===== 
 router.route('/')
     .get((_req, res) => {
         const warehouses = JSON.parse(warehouseFile);
         res.json(warehouses)
+    })
+
+// ===== Get single warehouse ===== 
+// getting warehouseId and then using this id to get all inventories for that warehouse
+const inventoriesFile = fs.readFileSync('./data/inventories.json')
+router.route('/:warehouseId')
+    .get((req, res) => {
+        const warehouses = JSON.parse(warehouseFile);
+        const inventories = JSON.parse(inventoriesFile);
+        const singleId = warehouses.find((house) => house.id === req.params.warehouseId);
+        const singleWarehouse = inventories.filter((inventory) => inventory.warehouseID === singleId.id)
+
+        if (!singleWarehouse) {
+            res.status(404).send('Warehouse not found');
+            return;
+        }
+
+        res.json(singleWarehouse);
     })
 
 module.exports = router;
