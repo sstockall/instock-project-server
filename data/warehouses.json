@@ -102,5 +102,18 @@
       "phone": "+1 (646) 123-1234",
       "email": "vmendoza@instock.com"
     }
+  },
+  {
+    "id": "9ewxeagnjl4gfa5or",
+    "name": "Test warehouse",
+    "address": "Test Street",
+    "city": "Test city",
+    "country": "Canada",
+    "contact": {
+      "name": "John Test",
+      "position": "Manager",
+      "phone": "+1 (646) 123-1234",
+      "email": "john@email.com"
+    }
   }
 ]
