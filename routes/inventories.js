@@ -15,7 +15,7 @@ router.route('/new')
         if (!dataIsValid(name, description, category, status, quantity, warehouseId)) {
             res.status(400).send("Incorrect or missing information sent to server")
         } else {
-            const warehouseFound = warehouses.find(item => item.id === warehouseId)
+            const warehouseFound = warehouses.find(warehouse => warehouse.id === warehouseId)
             let newInventoryItem = {
                 id: uniqid(),
                 warehouseID: warehouseId,
@@ -71,35 +71,32 @@ router.route('/:itemId')
 router.route('/:inventoryId/edit')
     .put((req, res) => {
         const inventoryId = req.params.inventoryId
-        let currentWarehouse = inventory.find(item => item.id === inventoryId)
-        let currentIndex = inventory.findIndex(item => item.id === inventoryId)
-        const { name, address, city, country, contactName, position, phone, email } = req.body
-        if (!currentWarehouse) {
-            res.status(400).send('Incorrect warehouse id.')
+        let currentItem = inventories.find(item => item.id === inventoryId)
+        let warehouseId = currentItem.warehouseID
+        let currentIndex = inventories.findIndex(item => item.id === inventoryId)
+        const { name, description, category, status, quantity } = req.body
+        if (!currentItem) {
+            res.status(400).send('Incorrect inventory item id.')
         } else {
-            if (!dataIsValid(name, address, city, country, contactName, position, phone, email)) {
-                res.status(400).send(errorMessage)
-                errorMessage = ''
+            if (!dataIsValid(name, description, category, status, quantity, warehouseId)) {
+                res.status(400).send('Incorrect or missing information sent to server')
             } else {
-                currentWarehouse = {
-                    id: warehouseId,
-                    name: name,
-                    address: address,
-                    city: city,
-                    country: country,
-                    contact: {
-                        name: contactName,
-                        position: position,
-                        phone: phone,
-                        email: email
-                    }
+                const warehouseFound = warehouses.find(warehouse => warehouse.id === warehouseId)
+                let updatedInventoryItem = {
+                    id: inventoryId,
+                    warehouseID: warehouseId,
+                    warehouseName: warehouseFound.name,
+                    itemName: name,
+                    description: description,
+                    category: category,
+                    status: status,
+                    quantity: quantity
                 }
-                res.status(201).send(`Edited warehouse with id: ${currentWarehouse.id}`)
-                const warehouses = JSON.parse(warehouseFile)
-                let updatedWarehouses = [...warehouses]
-                updatedWarehouses[currentIndex] = currentWarehouse
-                errorMessage = ''
-                fs.writeFileSync('./data/warehouses.json', JSON.stringify(updatedWarehouses))
+                res.status(201).send(updatedInventoryItem)
+                // .send(`Edited inventory item with id: ${inventoryId}`)
+                let updatedInventory = [...inventories]
+                updatedInventory[currentIndex] = updatedInventoryItem
+                // fs.writeFileSync('./data/warehouses.json', JSON.stringify(updatedInventory))
             }
         }
     })
