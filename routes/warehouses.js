@@ -1,3 +1,4 @@
+const { match } = require('assert');
 const express = require('express');
 const router = express.Router();
 const fs = require('fs');
@@ -110,7 +111,7 @@ router.route('/:warehouseId')
         const inventories = JSON.parse(inventoriesFile)
         const updatedWarehouses = warehouses.filter(item => item.id !== warehouseId)
 
-        if(!warehouses.find(item => item.id !== warehouseId)) {
+        if (!warehouses.find(item => item.id !== warehouseId)) {
             res.status(400).send('Unable to delete. Warehouse id is incorrect.')
         } else {
             const updatedInventories = inventories.filter(item => item.warehouseID !== warehouseId)
@@ -118,7 +119,47 @@ router.route('/:warehouseId')
             fs.writeFileSync('./data/warehouses.json', JSON.stringify(updatedWarehouses))
             fs.writeFileSync('./data/inventories.json', JSON.stringify(updatedInventories))
         }
-        
+
     })
+
+// ===== Update single warehouse =====
+router.route('/:warehouseId/edit')
+    .put((req, res) => {
+        const warehouseId = req.params.warehouseId
+        const warehouses = JSON.parse(warehouseFile);
+        let currentWarehouse = warehouses.find(warehouse => warehouse.id === warehouseId)
+        let currentIndex = warehouses.findIndex(warehouse => warehouse.id === warehouseId)
+        const { name, address, city, country, contactName, position, phone, email } = req.body
+        if (!currentWarehouse) {
+            res.status(400).send('Incorrect warehouse id.')
+        } else {
+            if (!dataIsValid(name, address, city, country, contactName, position, phone, email)) {
+                res.status(400).send(errorMessage)
+                errorMessage = ''
+            } else {
+                currentWarehouse = {
+                    id: warehouseId,
+                    name: name,
+                    address: address,
+                    city: city,
+                    country: country,
+                    contact: {
+                        name: contactName,
+                        position: position,
+                        phone: phone,
+                        email: email
+                    }
+                }
+                res.status(201).send(`Edited warehouse with id: ${currentWarehouse.id}`)
+                const warehouses = JSON.parse(warehouseFile)
+                let updatedWarehouses = [...warehouses]
+                updatedWarehouses[currentIndex] = currentWarehouse
+                errorMessage = ''
+                fs.writeFileSync('./data/warehouses.json', JSON.stringify(updatedWarehouses))
+            }
+        }
+    })
+
+
 
 module.exports = router;
