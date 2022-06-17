@@ -52,4 +52,21 @@ router.route('/')
         res.json(inventories)
     })
 
+// ===== Get a single inventory item =====
+// go through all inventory items and find the one whose ID matches the ID of request made
+const inventories = JSON.parse(inventoryFile);
+router.route('/:itemId')
+    .get((req, res) => {
+        const singleItem = inventories.find((item) => item.id ===req.params.itemId);
+
+// if single item is falsy, send 404
+    if (!singleItem){
+        res.status(404).send("Item not found");
+        return;
+    }
+// send single item to client
+    res.json(singleItem);
+    })
+
+
 module.exports = router; 
