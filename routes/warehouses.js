@@ -1,3 +1,4 @@
+const { match } = require('assert');
 const express = require('express');
 const router = express.Router();
 const fs = require('fs');
@@ -102,5 +103,36 @@ router.route('/:warehouseId')
 
         res.json(singleWarehouse);
     })
+
+// ===== Update single warehouse =====
+router.route('/:warehouseId/edit')
+    .put((req, res) => {
+        const warehouses = JSON.parse(warehouseFile);
+        let currentWarehouse = warehouses.find(warehouse => warehouse.id === req.params.warehouseId)
+        console.log(currentWarehouse);
+        const { name, address, city, country, contactName, position, phone, email } = req.body
+        if (!dataIsValid(name, address, city, country, contactName, position, phone, email)) {
+            res.status(400).send(errorMessage)
+            errorMessage = ''
+        } else {
+            let updatedWarehouse = {
+                id: currentWarehouse.id,
+                name: name,
+                address: address,
+                city: city,
+                country: country,
+                contact: {
+                    name: contactName,
+                    position: position,
+                    phone: phone,
+                    email: email
+                }
+            }
+            currentWarehouse = updatedWarehouse
+            console.log(currentWarehouse)
+            res.status(200).send(`Warehouse with id: ${currentWarehouse.id} was updated`)
+        }
+    })
+
 
 module.exports = router;
