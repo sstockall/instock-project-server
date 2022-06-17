@@ -92,11 +92,10 @@ router.route('/:inventoryId/edit')
                     status: status,
                     quantity: quantity
                 }
-                res.status(201).send(updatedInventoryItem)
-                // .send(`Edited inventory item with id: ${inventoryId}`)
                 let updatedInventory = [...inventories]
                 updatedInventory[currentIndex] = updatedInventoryItem
-                // fs.writeFileSync('./data/warehouses.json', JSON.stringify(updatedInventory))
+                res.status(201).send(`Edited inventory item with id: ${inventoryId}`)
+                fs.writeFileSync('./data/inventories.json', JSON.stringify(updatedInventory))
             }
         }
     })

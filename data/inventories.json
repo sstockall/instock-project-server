@@ -773,38 +773,8 @@
         "id": "9ewxeakt4l4hqjkrs",
         "warehouseID": "90ac3319-70d1-4a51-b91d-ba6c2464408c",
         "warehouseName": "Jersey",
-        "itemName": "asdf",
-        "description": "asdfasdf",
-        "category": "Apparel",
-        "status": "In stock",
-        "quantity": "12323"
-    },
-    {
-        "id": "9ewxeakt4l4hqjkrs",
-        "warehouseID": "9ewxeakivl4hq1yo3",
-        "warehouseName": "Jersey",
-        "itemName": "asdf",
-        "description": "asdfasdf",
-        "category": "Apparel",
-        "status": "In stock",
-        "quantity": "12323"
-    },
-    {
-        "id": "9ewxeakt4l4hqjkrs",
-        "warehouseID": "9ewxeakivl4hq1yo3",
-        "warehouseName": "Jersey",
-        "itemName": "asdf",
-        "description": "asdfasdf",
-        "category": "Apparel",
-        "status": "In stock",
-        "quantity": "12323"
-    },
-    {
-        "id": "9ewxeakt4l4hqjkrs",
-        "warehouseID": "9ewxeakivl4hq1yo3",
-        "warehouseName": "Jersey",
-        "itemName": "asdf",
-        "description": "asdfasdf",
+        "itemName": "Last Edit Test",
+        "description": "Last item in the file",
         "category": "Apparel",
         "status": "In stock",
         "quantity": "12323"
