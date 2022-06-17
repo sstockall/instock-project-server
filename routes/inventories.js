@@ -3,7 +3,7 @@ const router = express.Router();
 const fs = require('fs');
 var uniqid = require('uniqid')
 
-// ===== Add new inventory item =====
+// ===== ADD new inventory item =====
 const warehousesFile = fs.readFileSync('./data/warehouses.json')
 const warehouses = JSON.parse(warehousesFile)
 router.route('/new')
@@ -44,7 +44,7 @@ router.route('/new')
         }
     }
 
-// ===== Get list of all inventory items =====
+// ===== GET list of ALL inventory items =====
 const inventoryFile = fs.readFileSync('./data/inventories.json');
 router.route('/')
     .get((_req, res) => {
@@ -52,7 +52,7 @@ router.route('/')
         res.json(inventories)
     })
 
-// ===== Get a single inventory item =====
+// ===== GET a SINGLE inventory item =====
 // go through all inventory items and find the one whose ID matches the ID of request made
 const inventories = JSON.parse(inventoryFile);
 router.route('/:itemId')
@@ -67,6 +67,19 @@ router.route('/:itemId')
 // send single item to client
     res.json(singleItem);
     })
+
+// ===== EDIT a single inventory item =====
+// lol this is how far I got
+router.route('/edit')
+    .put((req, res) => {
+       
+
+    })
+
+    .patch((req, res) => {
+
+    })
+ 
 
 
 module.exports = router; 
