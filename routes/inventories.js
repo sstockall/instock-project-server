@@ -3,7 +3,11 @@ const router = express.Router();
 const fs = require('fs');
 var uniqid = require('uniqid')
 
+<<<<<<< HEAD
 // ----- Initial read of files -----
+=======
+// ===== ADD new inventory item =====
+>>>>>>> 1b8ca40aa2bdc46e6b17ffb02091a54f1dc667e6
 const warehousesFile = fs.readFileSync('./data/warehouses.json')
 const warehouses = JSON.parse(warehousesFile)
 const inventoryFile = fs.readFileSync('./data/inventories.json');
@@ -47,13 +51,18 @@ const dataIsValid = (name, description, category, status, quantity, warehouseId)
     }
 }
 
+<<<<<<< HEAD
 // ===== Get list of all inventory items =====
+=======
+// ===== GET list of ALL inventory items =====
+const inventoryFile = fs.readFileSync('./data/inventories.json');
+>>>>>>> 1b8ca40aa2bdc46e6b17ffb02091a54f1dc667e6
 router.route('/')
     .get((_req, res) => {
         res.json(inventories)
     })
 
-// ===== Get a single inventory item =====
+// ===== GET a SINGLE inventory item =====
 // go through all inventory items and find the one whose ID matches the ID of request made
 router.route('/:itemId')
     .get((req, res) => {
@@ -67,6 +76,7 @@ router.route('/:itemId')
         res.status(201).json(singleItem);
     })
 
+<<<<<<< HEAD
 // ===== Update single inventory item =====
 router.route('/:inventoryId/edit')
     .put((req, res) => {
@@ -99,5 +109,20 @@ router.route('/:inventoryId/edit')
             }
         }
     })
+=======
+// ===== EDIT a single inventory item =====
+// lol this is how far I got
+router.route('/edit')
+    .put((req, res) => {
+       
+
+    })
+
+    .patch((req, res) => {
+
+    })
+ 
+
+>>>>>>> 1b8ca40aa2bdc46e6b17ffb02091a54f1dc667e6
 
 module.exports = router; 
