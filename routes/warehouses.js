@@ -102,5 +102,23 @@ router.route('/:warehouseId')
 
         res.json(singleWarehouse);
     })
+// ===== Delete single warehouse and associated inventories =====
+router.route('/:warehouseId')
+    .delete((req, res) => {
+        const warehouseId = req.params.warehouseId
+        const warehouses = JSON.parse(warehouseFile)
+        const inventories = JSON.parse(inventoriesFile)
+        const updatedWarehouses = warehouses.filter(item => item.id !== warehouseId)
+
+        if(!warehouses.find(item => item.id !== warehouseId)) {
+            res.status(400).send('Unable to delete. Warehouse id is incorrect.')
+        } else {
+            const updatedInventories = inventories.filter(item => item.warehouseID !== warehouseId)
+            res.status(201).send(`Deleted warehouse with id: ${warehouseId}`)
+            fs.writeFileSync('./data/warehouses.json', JSON.stringify(updatedWarehouses))
+            fs.writeFileSync('./data/inventories.json', JSON.stringify(updatedInventories))
+        }
+        
+    })
 
 module.exports = router;
