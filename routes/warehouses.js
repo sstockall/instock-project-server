@@ -150,13 +150,12 @@ router.route('/:warehouseId/edit')
                         email: email
                     }
                 }
-                // res.status(201).send(`New warehouse created with id: ${newWarehouse.id}`)
+                res.status(201).send(`Edited warehouse with id: ${currentWarehouse.id}`)
                 const warehouses = JSON.parse(warehouseFile)
                 let updatedWarehouses = [...warehouses]
                 updatedWarehouses[currentIndex] = currentWarehouse
-                res.send(updatedWarehouses)
                 errorMessage = ''
-                // fs.writeFileSync('./data/warehouses.json', JSON.stringify(updatedWarehouses))
+                fs.writeFileSync('./data/warehouses.json', JSON.stringify(updatedWarehouses))
             }
         }
     })
