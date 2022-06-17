@@ -128,7 +128,29 @@ router.route('/:warehouseId/edit')
         const warehouses = JSON.parse(warehouseFile);
         let currentWarehouse = warehouses.find(warehouse => warehouse.id === req.params.warehouseId)
         const { name, address, city, country, contactName, position, phone, email } = req.body
-
+        if (!dataIsValid(name, address, city, country, contactName, position, phone, email)) {
+            res.status(400).send(errorMessage)
+            errorMessage = ''
+        } else {
+            currentWarehouse = {
+                id: uniqid(),
+                name: name,
+                address: address,
+                city: city,
+                country: country,
+                contact: {
+                    name: contactName,
+                    position: position,
+                    phone: phone,
+                    email: email
+                }
+            }
+            res.status(201).send(`New warehouse created with id: ${newWarehouse.id}`)
+            const warehouses = JSON.parse(warehouseFile)
+            let updatedWarehouses = [...warehouses, newWarehouse]
+            errorMessage = ''
+            fs.writeFileSync('./data/warehouses.json', JSON.stringify(updatedWarehouses))
+        }
     })
 
 
