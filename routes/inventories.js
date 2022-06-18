@@ -84,9 +84,8 @@ router.route('/:itemId')
         const updatedItems = itemList.filter(item => item.id !== itemId)
 
         if (!itemList.find(item => item.id !== itemId)) {
-            res.status(400).send('Unable to delete. item id is incorrect.')
+            res.status(400).send('Sorry, item cannot be deleted')
         } else {
-            const updatedItems = inventories.filter(item => item.itemID !== itemId)
             res.status(201).send(`Deleted item with id: ${itemId}`)
             fs.writeFileSync('./data/items.json', JSON.stringify(updatedItems))
             fs.writeFileSync('./data/inventories.json', JSON.stringify(updatedItems))
