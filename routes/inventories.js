@@ -69,20 +69,28 @@ router.route('/:itemId')
 
 
 // ===== Delete single inventory item =====
+
+// when user sends delete request, remove the item they are on from the array of inventory objects
+// itemId = the one with same id as in the params of the item the request came from
+//itemList = the original list of objects from the json inventory file
+//updatedItems = the itemList once the selected one with the itemId has been removed. make this list by filtering itemList for all items where the id is not the same as the selected one which is itemId
+//put in a line for catching errors
+//send back updatedItems
+
 router.route('/:itemId')
     .delete((req, res) => {
         const itemId = req.params.itemId
-        const items = JSON.parse(inventoryFile)
-        // const updatedItems = items.filter(item => item.id !== itemId)
+        const itemList = JSON.parse(inventoryFile)
+        const updatedItems = itemList.filter(item => item.id !== itemId)
 
-        // if (!items.find(item => item.id !== itemId)) {
-        //     res.status(400).send('Unable to delete. item id is incorrect.')
-        // } else {
-        //     const updatedItems = inventories.filter(item => item.itemID !== itemId)
-        //     res.status(201).send(`Deleted item with id: ${itemId}`)
-        //     fs.writeFileSync('./data/items.json', JSON.stringify(updatedItems))
-        //     fs.writeFileSync('./data/inventories.json', JSON.stringify(updatedItems))
-        // }
+        if (!itemList.find(item => item.id !== itemId)) {
+            res.status(400).send('Unable to delete. item id is incorrect.')
+        } else {
+            const updatedItems = inventories.filter(item => item.itemID !== itemId)
+            res.status(201).send(`Deleted item with id: ${itemId}`)
+            fs.writeFileSync('./data/items.json', JSON.stringify(updatedItems))
+            fs.writeFileSync('./data/inventories.json', JSON.stringify(updatedItems))
+        }
 
     })    
 
