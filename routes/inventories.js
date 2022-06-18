@@ -67,6 +67,25 @@ router.route('/:itemId')
         res.status(201).json(singleItem);
     })
 
+
+// ===== Delete single inventory item =====
+router.route('/:itemId')
+    .delete((req, res) => {
+        const itemId = req.params.itemId
+        const items = JSON.parse(inventoryFile)
+        // const updatedItems = items.filter(item => item.id !== itemId)
+
+        // if (!items.find(item => item.id !== itemId)) {
+        //     res.status(400).send('Unable to delete. item id is incorrect.')
+        // } else {
+        //     const updatedItems = inventories.filter(item => item.itemID !== itemId)
+        //     res.status(201).send(`Deleted item with id: ${itemId}`)
+        //     fs.writeFileSync('./data/items.json', JSON.stringify(updatedItems))
+        //     fs.writeFileSync('./data/inventories.json', JSON.stringify(updatedItems))
+        // }
+
+    })    
+
 // ===== Update single inventory item =====
 router.route('/:inventoryId/edit')
     .put((req, res) => {
