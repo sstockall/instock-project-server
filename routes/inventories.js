@@ -74,7 +74,7 @@ router.route('/:itemId')
 // itemId = the one with same id as in the params of the item the request came from
 //itemList = the original list of objects from the json inventory file
 //updatedItems = the itemList once the selected one with the itemId has been removed. make this list by filtering itemList for all items where the id is not the same as the selected one which is itemId
-//put in a line for catching errors
+//condition for errors
 //send back updatedItems
 
 router.route('/:itemId')
