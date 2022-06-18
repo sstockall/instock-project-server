@@ -4,8 +4,8 @@ const fs = require('fs');
 var uniqid = require('uniqid')
 
 // ----- Initial read of files -----
-const warehousesFile = fs.readFileSync('./data/warehouses.json')
-const warehouses = JSON.parse(warehousesFile)
+const warehousesFile = fs.readFileSync('./data/warehouses.json');
+const warehouses = JSON.parse(warehousesFile);
 const inventoryFile = fs.readFileSync('./data/inventories.json');
 const inventories = JSON.parse(inventoryFile);
 // ===== Add new inventory item =====
