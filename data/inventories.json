@@ -1,7 +1,5 @@
 [
     {
-<<<<<<< HEAD
-=======
         "id": "9b4f79ea-0e6c-4e59-8e05-afd933d0b3d3",
         "warehouseID": "2922c286-16cd-4d43-ab98-c79f698aeab0",
         "warehouseName": "Manhattan",
@@ -102,7 +100,6 @@
         "quantity": 12500
     },
     {
->>>>>>> 0f07bf323ded770be751af94ecddb727d80285e5
         "id": "7c79d334-6b90-4052-9def-aa9b8519c9fb",
         "warehouseID": "5bf7bd6c-2b16-4129-bddc-9d37ff8539e9",
         "warehouseName": "Washington",
