@@ -115,7 +115,7 @@ router.route('/:warehouseId')
             res.status(400).send('Unable to delete. Warehouse id is incorrect.')
         } else {
             const updatedInventories = inventories.filter(item => item.warehouseID !== warehouseId)
-            res.status(201).send(`Deleted warehouse with id: ${warehouseId}`)
+            res.status(201).send(updatedWarehouses)
             fs.writeFileSync('./data/warehouses.json', JSON.stringify(updatedWarehouses))
             fs.writeFileSync('./data/inventories.json', JSON.stringify(updatedInventories))
         }
