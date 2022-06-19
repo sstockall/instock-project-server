@@ -116,6 +116,7 @@ router.route('/:warehouseId')
         } else {
             const updatedInventories = inventories.filter(item => item.warehouseID !== warehouseId)
             res.status(201).send(updatedWarehouses)
+            //.send(`Deleted item with id: ${warehouseId}`)
             fs.writeFileSync('./data/warehouses.json', JSON.stringify(updatedWarehouses))
             fs.writeFileSync('./data/inventories.json', JSON.stringify(updatedInventories))
         }
