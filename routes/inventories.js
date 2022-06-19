@@ -80,7 +80,7 @@ router.route('/:itemId')
         const updatedItems = inventories.filter(item => item.id !== itemId)
 
         if (!inventories.find(item => item.id !== itemId)) {
-            res.status(400).send('Sorry, item cannot be deleted')
+            res.status(400).send(updatedItems)
         } else {
             res.status(201).send(updatedItems)
             //(`Deleted item with id: ${itemId}`)
