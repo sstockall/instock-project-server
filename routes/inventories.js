@@ -8,6 +8,22 @@ const warehousesFile = fs.readFileSync('./data/warehouses.json');
 const warehouses = JSON.parse(warehousesFile);
 const inventoryFile = fs.readFileSync('./data/inventories.json');
 const inventories = JSON.parse(inventoryFile);
+
+// ------ validation methods ------
+const inputIsValid = (input) => {
+    if (!input) {
+        return false
+    }
+    return true
+}
+const dataIsValid = (name, description, category, status, quantity, warehouseId) => {
+    if (!inputIsValid(name) || !inputIsValid(description) || !inputIsValid(category) || !inputIsValid(status) || !inputIsValid(quantity) || !inputIsValid(warehouseId)) {
+        return false
+    } else {
+        return true
+    }
+}
+
 // ===== Add new inventory item =====
 router.route('/new')
     .post((req, res) => {
@@ -27,25 +43,10 @@ router.route('/new')
                 quantity: quantity
             }
             res.status(201).send(newInventoryItem)
-            const inventories = JSON.parse(inventoryFile)
             let updatedInventories = [...inventories, newInventoryItem]
             fs.writeFileSync('./data/inventories.json', JSON.stringify(updatedInventories))
         }
     })
-// ------ validation methods ------
-const inputIsValid = (input) => {
-    if (!input) {
-        return false
-    }
-    return true
-}
-const dataIsValid = (name, description, category, status, quantity, warehouseId) => {
-    if (!inputIsValid(name) || !inputIsValid(description) || !inputIsValid(category) || !inputIsValid(status) || !inputIsValid(quantity) || !inputIsValid(warehouseId)) {
-        return false
-    } else {
-        return true
-    }
-}
 
 // ===== Get list of all inventory items =====
 router.route('/')
@@ -58,18 +59,14 @@ router.route('/')
 router.route('/:itemId')
     .get((req, res) => {
         const singleItem = inventories.find((item) => item.id === req.params.itemId);
-        // if single item is falsy, send 404
         if (!singleItem) {
             res.status(404).send("Item not found");
             return;
         }
-        // send single item to client
         res.status(201).json(singleItem);
     })
 
-
 // ===== Delete single inventory item =====
-
 // when user sends delete request, remove the item they are on from the array of inventory objects
 // itemId = the one with same id as in the params of the item the request came from
 //itemList = the original list of objects from the json inventory file
@@ -80,8 +77,7 @@ router.route('/:itemId')
 router.route('/:itemId')
     .delete((req, res) => {
         const itemId = req.params.itemId
-        const itemList = JSON.parse(inventoryFile)
-        const updatedItems = itemList.filter(item => item.id !== itemId)
+        const updatedItems = inventories.filter(item => item.id !== itemId)
 
         if (!itemList.find(item => item.id !== itemId)) {
             res.status(400).send('Sorry, item cannot be deleted')
@@ -90,7 +86,6 @@ router.route('/:itemId')
             //(`Deleted item with id: ${itemId}`)
             fs.writeFileSync('./data/inventories.json', JSON.stringify(updatedItems))
         }
-
     })    
 
 // ===== Update single inventory item =====

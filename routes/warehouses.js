@@ -1,4 +1,3 @@
-const { match } = require('assert');
 const express = require('express');
 const router = express.Router();
 const fs = require('fs');
@@ -10,34 +9,6 @@ const warehouses = JSON.parse(warehouseFile)
 const inventoriesFile = fs.readFileSync('./data/inventories.json')
 const inventories = JSON.parse(inventoriesFile);
 
-// ===== Add new warehouse =====
-router.route('/new')
-    .post((req, res) => {
-        const { name, address, city, country, contactName, position, phone, email } = req.body
-        if (!dataIsValid(name, address, city, country, contactName, position, phone, email)) {
-            res.status(400).send(errorMessage)
-            errorMessage = ''
-        } else {
-            let newWarehouse = {
-                id: uniqid(),
-                name: name,
-                address: address,
-                city: city,
-                country: country,
-                contact: {
-                    name: contactName,
-                    position: position,
-                    phone: phone,
-                    email: email
-                }
-            }
-            res.status(201).send(`New warehouse created with id: ${newWarehouse.id}`)
-            // const warehouses = JSON.parse(warehouseFile)
-            let updatedWarehouses = [...warehouses, newWarehouse]
-            errorMessage = ''
-            fs.writeFileSync('./data/warehouses.json', JSON.stringify(updatedWarehouses))
-        }
-    })
 // ------ validation methods ------
 // errorMessage is returned to the post request detailing what information was invalid (missin info, wrong phone format and/or wrong email format)
 let errorMessage = ''
@@ -81,20 +52,44 @@ const dataIsValid = (name, address, city, country, contactName, position, phone,
     return areInputsValid
 }
 
+// ===== Add new warehouse =====
+router.route('/new')
+    .post((req, res) => {
+        const { name, address, city, country, contactName, position, phone, email } = req.body
+        if (!dataIsValid(name, address, city, country, contactName, position, phone, email)) {
+            res.status(400).send(errorMessage)
+            errorMessage = ''
+        } else {
+            let newWarehouse = {
+                id: uniqid(),
+                name: name,
+                address: address,
+                city: city,
+                country: country,
+                contact: {
+                    name: contactName,
+                    position: position,
+                    phone: phone,
+                    email: email
+                }
+            }
+            res.status(201).send(`New warehouse created with id: ${newWarehouse.id}`)
+            let updatedWarehouses = [...warehouses, newWarehouse]
+            errorMessage = ''
+            fs.writeFileSync('./data/warehouses.json', JSON.stringify(updatedWarehouses))
+        }
+    })
+
 // ===== Get list of all warehouses items ===== 
 router.route('/')
     .get((_req, res) => {
-        // const warehouses = JSON.parse(warehouseFile);
         res.json(warehouses)
     })
 
 // ===== Get single warehouse ===== 
 // getting warehouseId and then using this id to get all inventories for that warehouse
-
 router.route('/:warehouseId')
     .get((req, res) => {
-        // const warehouses = JSON.parse(warehouseFile);
-        // const inventories = JSON.parse(inventoriesFile);
         const singleId = warehouses.find((house) => house.id === req.params.warehouseId);
         const singleWarehouse = inventories.filter((inventory) => inventory.warehouseID === singleId.id)
 
@@ -108,8 +103,6 @@ router.route('/:warehouseId')
 router.route('/:warehouseId')
     .delete((req, res) => {
         const warehouseId = req.params.warehouseId
-        // const warehouses = JSON.parse(warehouseFile)
-        // const inventories = JSON.parse(inventoriesFile)
         const updatedWarehouses = warehouses.filter(item => item.id !== warehouseId)
 
         if (!warehouses.find(item => item.id !== warehouseId)) {
@@ -121,14 +114,12 @@ router.route('/:warehouseId')
             fs.writeFileSync('./data/warehouses.json', JSON.stringify(updatedWarehouses))
             fs.writeFileSync('./data/inventories.json', JSON.stringify(updatedInventories))
         }
-
     })
 
 // ===== Update single warehouse =====
 router.route('/:warehouseId/edit')
     .put((req, res) => {
         const warehouseId = req.params.warehouseId
-        // const warehouses = JSON.parse(warehouseFile);
         let currentWarehouse = warehouses.find(warehouse => warehouse.id === warehouseId)
         let currentIndex = warehouses.findIndex(warehouse => warehouse.id === warehouseId)
         const { name, address, city, country, contactName, position, phone, email } = req.body
@@ -153,7 +144,6 @@ router.route('/:warehouseId/edit')
                     }
                 }
                 res.status(201).send(`Edited warehouse with id: ${currentWarehouse.id}`)
-                // const warehouses = JSON.parse(warehouseFile)
                 let updatedWarehouses = [...warehouses]
                 updatedWarehouses[currentIndex] = currentWarehouse
                 errorMessage = ''
@@ -161,7 +151,5 @@ router.route('/:warehouseId/edit')
             }
         }
     })
-
-
 
 module.exports = router;
