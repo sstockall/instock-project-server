@@ -86,7 +86,7 @@ router.route('/')
         res.json(warehouses)
     })
 
-// ===== Get single warehouse ===== 
+// ===== Get inventory details from single warehouse ===== 
 // getting warehouseId and then using this id to get all inventories for that warehouse
 router.route('/:warehouseId')
     .get((req, res) => {

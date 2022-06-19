@@ -79,7 +79,7 @@ router.route('/:itemId')
         const itemId = req.params.itemId
         const updatedItems = inventories.filter(item => item.id !== itemId)
 
-        if (!itemList.find(item => item.id !== itemId)) {
+        if (!inventories.find(item => item.id !== itemId)) {
             res.status(400).send('Sorry, item cannot be deleted')
         } else {
             res.status(201).send(updatedItems)
