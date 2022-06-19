@@ -773,19 +773,10 @@
         "id": "9ewxeakt4l4hqjkrs",
         "warehouseID": "90ac3319-70d1-4a51-b91d-ba6c2464408c",
         "warehouseName": "Jersey",
-<<<<<<< HEAD
-        "itemName": "asdf",
-        "description": "asdfasdf",
-=======
         "itemName": "Last Edit Test",
         "description": "Last item in the file",
->>>>>>> 0f07bf323ded770be751af94ecddb727d80285e5
         "category": "Apparel",
         "status": "In stock",
         "quantity": "12323"
     }
-<<<<<<< HEAD
 ]
-=======
-]
->>>>>>> 0f07bf323ded770be751af94ecddb727d80285e5
