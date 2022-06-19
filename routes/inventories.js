@@ -87,7 +87,6 @@ router.route('/:itemId')
             res.status(400).send('Sorry, item cannot be deleted')
         } else {
             res.status(201).send(`Deleted item with id: ${itemId}`)
-            fs.writeFileSync('./data/items.json', JSON.stringify(updatedItems))
             fs.writeFileSync('./data/inventories.json', JSON.stringify(updatedItems))
         }
 
